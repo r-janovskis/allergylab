@@ -1,30 +1,33 @@
 services:
-    dbhost:
-      image: quanticschoolofbusiness/103mysql
-    app:
-      build: app/.
-      ports: 
-        - 3006:3006
-      depends_on:
-        - dbhost
-        - redis-server
-    redis-server:
-      image: redis
-    email:
-      build: email/.
-      ports: 
-        - 25:25
-      depends_on:
-        - redis-server
-      environment:
-        TO_ADDRESS: <your Quantic email>
-        FROM_ADDRESS: <new Gmail email>
-        FROM_PASSWORD: <Gmail app password>
-    db-loader:
-      build: db-loader/.
-      volumes: 
-        - <Enter Here>allergy-lab-watchfolder:/mnt/watchfolder/
-      environment:
-        FOLDER_PATH: /mnt/watchfolder/
-      depends_on:
-        - dbhost
+  dbhost:
+    image: quanticschoolofbusiness/103mysql
+  app:
+    build: app/.
+    ports:
+      - 3006:3006
+    depends_on:
+      - dbhost
+      - redis-server
+  redis-server:
+    image: redis
+  email:
+    build: email/.
+    ports:
+      - 25:25
+    depends_on:
+      - redis-server
+    environment:
+      TO_ADDRESS: rj42@students.quantic.edu
+      FROM_ADDRESS: reinis.janovskis@gmail.com
+      FROM_PASSWORD: qikfqnjapphubjcq
+  db-loader:
+    build: db-loader/.
+    volumes:
+      - C:/Projects/Quantic/Microservices Architectures/allergy-lab-watchfolder:/mnt/watchfolder/
+    environment:
+      FOLDER_PATH: /mnt/watchfolder/
+      DB_NAME: allergen_info
+      DB_USER: pythonapp
+      DB_PASS: secretPass123!
+    depends_on:
+      - dbhost
